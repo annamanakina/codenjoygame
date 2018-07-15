@@ -30,20 +30,34 @@ import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
 
 /**
- * Артефакт: Стена на поле
+ * Артефакт: Бомба на поле
  */
-public class Wall extends PointImpl implements State<Elements, Player> {
+public class Ball extends PointImpl implements State<Elements, Player> {
 
-    public Wall(int x, int y) {
+    private Elements color;
+
+    public Ball(Elements color, int x, int y) {
         super(x, y);
     }
 
-    public Wall(Point point) {
+    public Ball(Elements color, Point point) {
         super(point);
     }
 
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
-        return Elements.WALL;
+        if (color == Elements.BLUE)
+            return Elements.BLUE;
+        else if (color == Elements.GREEN)
+            return Elements.GREEN;
+        else if (color == Elements.NONE)
+            return Elements.NONE;
+        else if (color == Elements.RED)
+            return Elements.RED;
+        else if (color == Elements.WHITE)
+            return Elements.WHITE;
+        else if (color == Elements.YELLOW)
+            return Elements.YELLOW;
+        return null;
     }
 }

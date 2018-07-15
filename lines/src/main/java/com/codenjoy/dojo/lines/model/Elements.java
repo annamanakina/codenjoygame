@@ -31,13 +31,21 @@ import com.codenjoy.dojo.services.printer.CharElements;
  */
 public enum Elements implements CharElements {
 
-    NONE(' '),       // например это пустое место, куда можно перейти герою
+    /*NONE(' '),       // например это пустое место, куда можно перейти герою
     WALL('☼'),       // а это стенка, через которую я хочу чтобы проходить нельзя было
     HERO('☺'),       // а это мой герой
     OTHER_HERO('☻'), // это герои других игроков
     DEAD_HERO('X'),  // а это временное явление - трупик моего героя, которое пропадет в следующем такте
     GOLD('$'),       // это то, за чем будет охота
     BOMB('x');       // а это бомба, на которой можно подорваться
+*/
+
+    NONE(' '),       // empty cells after lines dissapear
+    RED('R'),       //
+    BLUE('B'),
+    YELLOW('Y'),
+    GREEN('G'),
+    WHITE('W');
 
     final char ch;
 

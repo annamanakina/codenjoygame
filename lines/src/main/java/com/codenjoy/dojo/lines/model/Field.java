@@ -23,8 +23,11 @@ package com.codenjoy.dojo.lines.model;
  */
 
 
+import com.codenjoy.dojo.lines.model.items.Ball;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.multiplayer.GameField;
+
+import java.util.List;
 
 /**
  * Так случилось что доска знает про героя, а герой про доску.
@@ -32,15 +35,17 @@ import com.codenjoy.dojo.services.multiplayer.GameField;
  */
 public interface Field extends GameField<Player> {
 
-    boolean isBarrier(int x, int y);
-
     Point getFreeRandom();
 
-    boolean isFree(int x, int y);
+ //   boolean isInLine(int x, int y);
 
-    boolean isBomb(int x, int y);
+    void setBall(Elements color, int x, int y);
 
-    void setBomb(int x, int y);
+    void removeBall(int x, int y);
 
-    void removeBomb(int x, int y);
+    List<Ball> getBalls();
+
+    //void setBall(Elements color, int x, int y);
+
+    //void removeBall(int x, int y);
 }

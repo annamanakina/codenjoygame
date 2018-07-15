@@ -22,11 +22,8 @@ package com.codenjoy.dojo.lines.model;
  * #L%
  */
 
-
-import com.codenjoy.dojo.lines.model.items.Gold;
-import com.codenjoy.dojo.lines.model.items.Wall;
-
 import java.util.List;
+import com.codenjoy.dojo.lines.model.items.Ball;
 
 /**
  * Я вот для простоты и удобства хочу указывать борду в тестовом виде, а реализация этого интерфейса позволяет мне это сделать
@@ -37,10 +34,5 @@ public interface Level {
      * @return Размер поля (обязательно квадратное)
      */
     int getSize();
-
-    List<Wall> getWalls();
-
-    List<Hero> getHero();
-
-    List<Gold> getGold();
+    List<Ball> getBalls();
 }

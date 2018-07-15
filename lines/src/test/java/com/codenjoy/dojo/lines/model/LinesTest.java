@@ -82,15 +82,15 @@ public class LinesTest {
     @Test
     public void shouldFieldAtStart() {
         givenFl("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
+                      "☼   ☼" +
+                      "☼ ☺ ☼" +
+                      "☼   ☼" +
+                      "☼☼☼☼☼");
 
         assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
+                        "☼   ☼" +
+                        "☼ ☺ ☼" +
+                        "☼   ☼" +
                 "☼☼☼☼☼");
     }
 
@@ -180,10 +180,10 @@ public class LinesTest {
         game.tick();
 
         assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼  ☺☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
+                        "☼   ☼" +
+                        "☼  ☺☼" +
+                        "☼   ☼" +
+                        "☼☼☼☼☼");
     }
 
     @Test

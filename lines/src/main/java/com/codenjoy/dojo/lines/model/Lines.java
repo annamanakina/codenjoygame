@@ -23,9 +23,7 @@ package com.codenjoy.dojo.lines.model;
  */
 
 
-import com.codenjoy.dojo.lines.model.items.Bomb;
-import com.codenjoy.dojo.lines.model.items.Gold;
-import com.codenjoy.dojo.lines.model.items.Wall;
+import com.codenjoy.dojo.lines.model.items.Ball;
 import com.codenjoy.dojo.lines.services.Events;
 import com.codenjoy.dojo.services.*;
 import com.codenjoy.dojo.services.printer.BoardReader;
@@ -38,14 +36,14 @@ import static java.util.stream.Collectors.toList;
 
 /**
  * О! Это самое сердце игры - борда, на которой все происходит.
- * Если какой-то из жителей борды вдруг захочет узнать что-то у нее, то лучше ему дать интефейс {@see Field}
- * Борда реализует интерфейс {@see Tickable} чтобы быть уведомленной о каждом тике игры. Обрати внимание на {Sample#tick()}
+ * Если какой-то из жителей борды вдруг захочет узнать что-то у нее,
+ * то лучше ему дать интефейс {@see Field}
+ * Борда реализует интерфейс {@see Tickable} чтобы быть уведомленной о
+ * каждом тике игры. Обрати внимание на {Sample#tick()}
  */
 public class Lines implements Field {
 
-    private List<Wall> walls;
-    private List<Gold> gold;
-    private List<Bomb> bombs;
+    private List<Ball> balls;
 
     private List<Player> players;
 
@@ -54,11 +52,9 @@ public class Lines implements Field {
 
     public Lines(Level level, Dice dice) {
         this.dice = dice;
-        walls = level.getWalls();
-        gold = level.getGold();
         size = level.getSize();
         players = new LinkedList<>();
-        bombs = new LinkedList<>();
+        balls = new LinkedList<>();
     }
 
     /**
@@ -71,13 +67,13 @@ public class Lines implements Field {
 
             hero.tick();
 
-            if (gold.contains(hero)) {
-                gold.remove(hero);
-                player.event(Events.WIN);
-
-                Point pos = getFreeRandom();
-                gold.add(new Gold(pos));
-            }
+//            if (gold.contains(hero)) {
+//                gold.remove(hero);
+//                player.event(Events.WIN);
+//
+//                Point pos = getFreeRandom();
+//                gold.add(new Gold(pos));
+//            }
         }
 
         for (Player player : players) {
@@ -94,25 +90,14 @@ public class Lines implements Field {
     }
 
     @Override
-    public boolean isBarrier(int x, int y) {
-        Point pt = pt(x, y);
-        return x > size - 1
-                || x < 0
-                || y < 0
-                || y > size - 1
-                || walls.contains(pt)
-                || getHeroes().contains(pt);
-    }
-
-    @Override
     public Point getFreeRandom() {
         int x;
         int y;
         int c = 0;
-        do {
+      //  do {
             x = dice.next(size);
             y = dice.next(size);
-        } while (!isFree(x, y) && c++ < 100);
+        //} while (!isFree(x, y) && c++ < 100);
 
         if (c >= 100) {
             return pt(0, 0);
@@ -121,43 +106,32 @@ public class Lines implements Field {
         return pt(x, y);
     }
 
+//    @Override
+//    public boolean isFree(int x, int y) {
+//        pt = pt(x, y);
+//
+//        return !(pt.gold.contains(pt)
+//                || getHeroes().contains(pt));
+//    }
+//
+//    @Override
+//    public boolean isBomb(int x, int y) {
+//        return balls.contains(pt(x, y));
+//    }
+
     @Override
-    public boolean isFree(int x, int y) {
+    public void setBall(Elements color, int x, int y) {
         Point pt = pt(x, y);
-
-        return !(gold.contains(pt)
-                || bombs.contains(pt)
-                || walls.contains(pt)
-                || getHeroes().contains(pt));
-    }
-
-    @Override
-    public boolean isBomb(int x, int y) {
-        return bombs.contains(pt(x, y));
-    }
-
-    @Override
-    public void setBomb(int x, int y) {
-        Point pt = pt(x, y);
-        if (!bombs.contains(pt)) {
-            bombs.add(new Bomb(x, y));
+        if (!balls.contains(pt)) {
+            balls.add(new Ball(color, x, y));
         }
     }
 
     @Override
-    public void removeBomb(int x, int y) {
-        bombs.remove(pt(x, y));
+    public void removeBall(int x, int y) {
+        balls.remove(pt(x, y));
     }
 
-    public List<Gold> getGold() {
-        return gold;
-    }
-
-    public List<Hero> getHeroes() {
-        return players.stream()
-                .map(Player::getHero)
-                .collect(toList());
-    }
 
     @Override
     public void newGame(Player player) {
@@ -169,15 +143,11 @@ public class Lines implements Field {
 
     @Override
     public void remove(Player player) {
-        players.remove(player);
+
     }
 
-    public List<Wall> getWalls() {
-        return walls;
-    }
-
-    public List<Bomb> getBombs() {
-        return bombs;
+    public List<Ball> getBalls() {
+        return balls;
     }
 
     @Override
@@ -193,10 +163,7 @@ public class Lines implements Field {
             @Override
             public Iterable<? extends Point> elements() {
                 return new LinkedList<Point>(){{
-                    addAll(Lines.this.getWalls());
-                    addAll(Lines.this.getHeroes());
-                    addAll(Lines.this.getGold());
-                    addAll(Lines.this.getBombs());
+                    addAll(Lines.this.getBalls());
                 }};
             }
         };
