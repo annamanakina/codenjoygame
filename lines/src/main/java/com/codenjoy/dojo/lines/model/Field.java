@@ -37,6 +37,9 @@ public interface Field extends GameField<Player> {
 
     Point getFreeRandom();
 
+    boolean isFree(int x, int y);
+
+    //TODO think how to realize it
  //   boolean isInLine(int x, int y);
 
     void setBall(Elements color, int x, int y);

@@ -35,8 +35,9 @@ import com.codenjoy.dojo.services.multiplayer.PlayerHero;
  */
 public class Hero extends PlayerHero<Field> implements ActJoystick {
 
-    public Hero()//Point xy) {
-        super();
+    //TODO constructor //4.03 was like that
+    public Hero(Point xy) {
+        super(xy);
     }
 
     @Override
@@ -44,7 +45,8 @@ public class Hero extends PlayerHero<Field> implements ActJoystick {
         this.field = field;
     }
 
-    @Override
+    //пока так будет
+    /*@Override
     public void down() {
     }
 
@@ -58,10 +60,11 @@ public class Hero extends PlayerHero<Field> implements ActJoystick {
 
     @Override
     public void right() {
-    }
+    }*/
 
     @Override
     public void act(int... p) {
+    //TODO do smth here
     }
 
     @Override
@@ -69,6 +72,8 @@ public class Hero extends PlayerHero<Field> implements ActJoystick {
 //TODO
     }
 
+
+    //пока будет true, потом посмотрим
     public boolean isAlive() {
         return true;
     }

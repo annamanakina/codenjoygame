@@ -36,12 +36,15 @@ public class Ball extends PointImpl implements State<Elements, Player> {
 
     private Elements color;
 
+    //TODO вернуться к color, может она не так должна иниц.
     public Ball(Elements color, int x, int y) {
         super(x, y);
+        this.color = color;
     }
 
     public Ball(Elements color, Point point) {
         super(point);
+        this.color = color;
     }
 
     @Override

@@ -61,16 +61,14 @@ public class LinesTest {
     }
 
     private void givenFl(String board) {
-        LevelImpl level = new LevelImpl(board);
-        Hero hero = level.getHero().get(0);
-
+        Level level = new LevelImpl(board);
         game = new Lines(level, dice);
         listener = mock(EventListener.class);
         player = new Player(listener);
         game.newGame(player);
-        player.hero = hero;
-        hero.init(game);
-        this.hero = game.getHeroes().get(0);
+        //hero = player.hero;
+        //hero.init(game);
+        hero = game.getHeroes().get(0);
     }
 
     private void assertE(String expected) {
@@ -81,21 +79,31 @@ public class LinesTest {
     // есть карта со мной
     @Test
     public void shouldFieldAtStart() {
-        givenFl("☼☼☼☼☼" +
-                      "☼   ☼" +
-                      "☼ ☺ ☼" +
-                      "☼   ☼" +
-                      "☼☼☼☼☼");
+        givenFl("          " +
+                       "          " +
+                       "  R W     " +
+                       "          " +
+                       "     G    " +
+                       "          " +
+                       "          " +
+                       "          " +
+                       "          " +
+                       "          ");
 
-        assertE("☼☼☼☼☼" +
-                        "☼   ☼" +
-                        "☼ ☺ ☼" +
-                        "☼   ☼" +
-                "☼☼☼☼☼");
+        assertE("          " +
+                         "          " +
+                         "  R W     " +
+                         "          " +
+                         "     G    " +
+                         "          " +
+                         "          " +
+                         "          " +
+                         "          " +
+                         "          ");
     }
 
     // я ходить
-    @Test
+    /*@Test
     public void shouldWalk() {
         givenFl("☼☼☼☼☼" +
                 "☼   ☼" +
@@ -400,5 +408,5 @@ public class LinesTest {
                 "☼☺  ☼" +
                 "☼   ☼" +
                 "☼☼☼☼☼");
-    }
+    }*/
 }

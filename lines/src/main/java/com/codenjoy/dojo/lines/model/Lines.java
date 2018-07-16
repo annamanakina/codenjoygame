@@ -44,8 +44,7 @@ import static java.util.stream.Collectors.toList;
 public class Lines implements Field {
 
     private List<Ball> balls;
-
-    private List<Player> players;
+    private List<Player> players; //игрок один у нас будет
 
     private final int size;
     private Dice dice;
@@ -54,7 +53,7 @@ public class Lines implements Field {
         this.dice = dice;
         size = level.getSize();
         players = new LinkedList<>();
-        balls = new LinkedList<>();
+        balls = level.getBalls();
     }
 
     /**
@@ -76,13 +75,13 @@ public class Lines implements Field {
 //            }
         }
 
-        for (Player player : players) {
+        /*for (Player player : players) {
             Hero hero = player.getHero();
 
             if (!hero.isAlive()) {
                 player.event(Events.LOOSE);
             }
-        }
+        }*/
     }
 
     public int size() {
@@ -94,10 +93,10 @@ public class Lines implements Field {
         int x;
         int y;
         int c = 0;
-      //  do {
+        do {
             x = dice.next(size);
             y = dice.next(size);
-        //} while (!isFree(x, y) && c++ < 100);
+        } while (!isFree(x, y) && c++ < 100);
 
         if (c >= 100) {
             return pt(0, 0);
@@ -106,13 +105,11 @@ public class Lines implements Field {
         return pt(x, y);
     }
 
-//    @Override
-//    public boolean isFree(int x, int y) {
-//        pt = pt(x, y);
-//
-//        return !(pt.gold.contains(pt)
-//                || getHeroes().contains(pt));
-//    }
+    @Override
+    public boolean isFree(int x, int y) {
+        Point pt = pt(x, y);
+        return !balls.contains(pt);
+  }
 //
 //    @Override
 //    public boolean isBomb(int x, int y) {
@@ -132,6 +129,12 @@ public class Lines implements Field {
         balls.remove(pt(x, y));
     }
 
+    public List<Hero> getHeroes() {
+        return players.stream()
+                .map(Player::getHero)
+                .collect(toList());
+    }
+
 
     @Override
     public void newGame(Player player) {
@@ -143,7 +146,7 @@ public class Lines implements Field {
 
     @Override
     public void remove(Player player) {
-
+        players.remove(player);
     }
 
     public List<Ball> getBalls() {
@@ -162,9 +165,7 @@ public class Lines implements Field {
 
             @Override
             public Iterable<? extends Point> elements() {
-                return new LinkedList<Point>(){{
-                    addAll(Lines.this.getBalls());
-                }};
+                return Lines.this.getBalls();
             }
         };
     }

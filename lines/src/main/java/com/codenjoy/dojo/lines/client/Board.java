@@ -39,6 +39,26 @@ public class Board extends AbstractBoard<Elements> {
         return Elements.valueOf(ch);
     }
 
+    public boolean isRed(int x, int y) {
+        return isAt(x, y, Elements.RED);
+    }
+
+    public boolean isBlue(int x, int y) {
+        return isAt(x, y, Elements.BLUE);
+    }
+
+    public boolean isGreen(int x, int y) {
+        return isAt(x, y, Elements.GREEN);
+    }
+
+    public boolean isYellow(int x, int y) {
+        return isAt(x, y, Elements.YELLOW);
+    }
+
+    public boolean isWhite(int x, int y) {
+        return isAt(x, y, Elements.WHITE);
+    }
+
 
     public boolean isGameOver() {
         return false;

@@ -45,15 +45,15 @@ import java.util.List;
  */
 public class ApofigSolver implements Solver<Board> {
 
-    private DeikstraFindWay way;
+   // private DeikstraFindWay way;
     private Dice dice;
 
     public ApofigSolver(Dice dice) {
         this.dice = dice;
-        this.way = new DeikstraFindWay();
+     //   this.way = new DeikstraFindWay();
     }
 
-    public DeikstraFindWay.Possible possible(final Board board) {
+    /*public DeikstraFindWay.Possible possible(final Board board) {
         return new DeikstraFindWay.Possible() {
             @Override
             public boolean possible(Point from, Direction where) {
@@ -74,14 +74,15 @@ public class ApofigSolver implements Solver<Board> {
                 return true;
             }
         };
-    }
+    }*/
 
     @Override
     public String get(final Board board) {
-        if (board.isGameOver()) return "";
+        /*if (board.isGameOver()) return "";
         List<Direction> result = getDirections(board);
         if (result.isEmpty()) return "";
-        return result.get(0).toString() + getBombIfNeeded(board);
+        return result.get(0).toString() + getBombIfNeeded(board);*/
+        return "act (1,1)";
     }
 
 
@@ -99,7 +100,7 @@ public class ApofigSolver implements Solver<Board> {
 //    }
 
     // TODO fix Deikstra find way
-    private boolean bombsNear(Board board) {
+    /*private boolean bombsNear(Board board) {
         Point me = board.getMe();
         Point atLeft = Direction.LEFT.change(me);
         Point atRight = Direction.RIGHT.change(me);
@@ -110,7 +111,7 @@ public class ApofigSolver implements Solver<Board> {
                 board.isAt(atRight.getX(), atRight.getY(), Elements.BOMB, Elements.WALL, Elements.OTHER_HERO) &&
                 board.isAt(atUp.getX(), atUp.getY(), Elements.BOMB, Elements.WALL, Elements.OTHER_HERO) &&
                 board.isAt(atDown.getX(), atDown.getY(), Elements.BOMB, Elements.WALL, Elements.OTHER_HERO);
-    }
+    }*/
 
     public static void main(String[] args) {
 //        LocalGameRunner.run(new GameRunner(),
