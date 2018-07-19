@@ -47,6 +47,14 @@ public class Ball extends PointImpl implements State<Elements, Player> {
         this.color = color;
     }
 
+    public Elements getColor() {
+        return color;
+    }
+
+    public void setColor(Elements color) {
+        this.color = color;
+    }
+
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         if (color == Elements.BLUE)

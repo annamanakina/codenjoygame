@@ -66,8 +66,6 @@ public class LinesTest {
         listener = mock(EventListener.class);
         player = new Player(listener);
         game.newGame(player);
-        //hero = player.hero;
-        //hero.init(game);
         hero = game.getHeroes().get(0);
     }
 
@@ -101,6 +99,39 @@ public class LinesTest {
                          "          " +
                          "          ");
     }
+
+
+    //move ball to the right
+    @Test
+    public void shouldMoveBall_right() {
+        givenFl("          " +
+                       "    W     " +
+                       "   W WW   " +
+                       "    Y     " +
+                       "     G    " +
+                       "          " +
+                       "          " +
+                       "          " +
+                       "          " +
+                       "          ");
+
+        hero.act(3, 7);
+        game.tick();
+
+        assertE("          " +
+                         "    W     " +
+                         "    WWW   " +
+                         "    Y     " +
+                         "     G    " +
+                         "          " +
+                         "          " +
+                         "          " +
+                         "          " +
+                         "          ");
+    }
+
+
+
 
     // я ходить
     /*@Test

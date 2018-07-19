@@ -28,8 +28,10 @@ import com.codenjoy.dojo.lines.services.Events;
 import com.codenjoy.dojo.services.*;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
+import javax.lang.model.element.Element;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static com.codenjoy.dojo.services.PointImpl.pt;
 import static java.util.stream.Collectors.toList;
@@ -45,6 +47,7 @@ public class Lines implements Field {
 
     private List<Ball> balls;
     private List<Player> players; //игрок один у нас будет
+   // private Level level;
 
     private final int size;
     private Dice dice;
@@ -63,32 +66,15 @@ public class Lines implements Field {
     public void tick() {
         for (Player player : players) {
             Hero hero = player.getHero();
-
             hero.tick();
-
-//            if (gold.contains(hero)) {
-//                gold.remove(hero);
-//                player.event(Events.WIN);
-//
-//                Point pos = getFreeRandom();
-//                gold.add(new Gold(pos));
-//            }
         }
-
-        /*for (Player player : players) {
-            Hero hero = player.getHero();
-
-            if (!hero.isAlive()) {
-                player.event(Events.LOOSE);
-            }
-        }*/
     }
 
     public int size() {
         return size;
     }
 
-    @Override
+   /* @Override
     public Point getFreeRandom() {
         int x;
         int y;
@@ -96,6 +82,7 @@ public class Lines implements Field {
         do {
             x = dice.next(size);
             y = dice.next(size);
+            System.out.println(x + ", "+y);
         } while (!isFree(x, y) && c++ < 100);
 
         if (c >= 100) {
@@ -109,20 +96,88 @@ public class Lines implements Field {
     public boolean isFree(int x, int y) {
         Point pt = pt(x, y);
         return !balls.contains(pt);
-  }
-//
-//    @Override
-//    public boolean isBomb(int x, int y) {
-//        return balls.contains(pt(x, y));
-//    }
+  }*/
+
+    private void changeColor(Ball currentBall){
+        Elements currentColor = currentBall.getColor();
+        //get right element
+        Point adjacentPT = Direction.RIGHT.change(currentBall);
+        Ball adjacentBall = getBall(adjacentPT);
+        Elements adjacentColor = adjacentBall.getColor();
+        //change color between this two elements
+        balls.get(balls.indexOf(currentBall)).setColor(adjacentColor);
+        balls.get(balls.indexOf(adjacentBall)).setColor(currentColor);
+    }
+
+    private Ball getBall(Point pt){
+        return balls.stream()
+                .filter(Predicate.isEqual(pt))
+                .findFirst().orElseThrow(() -> new UnsupportedOperationException()); //TODO Exception
+    }
+
+
+    //TODO ИСПРАВИТЬ для левой стороны, для верха и низа если две элемента рядом
+    private boolean isBallsEqualsOnTheRight(Point pt){
+        Point firstRightPT = Direction.RIGHT.change(pt);
+        Point secondRightPT = Direction.RIGHT.change(firstRightPT);
+        Ball secondRightBall = getBall(secondRightPT);
+        //System.out.println("isBallsEqualsOnTheRight secondRightBall " + secondRightBall.getX() + ", " + secondRightBall.getY());
+
+        Point nextRightPT = Direction.RIGHT.change(secondRightBall);
+        Ball nextRightBall = getBall(nextRightPT);
+
+       // System.out.println("isBallsEqualsOnTheRight nextRightBall " + nextRightBall.getX() + ", " + nextRightBall.getY());
+        return secondRightBall.getColor().equals(nextRightBall.getColor());
+    }
+
+    @Override
+    public void moveBalls(int x, int y) {
+        Point pt = pt(x, y);
+        if (isBallsEqualsOnTheRight(pt)){
+            Ball ball = getBall(pt);
+           changeColor(ball);
+        }
+    }
 
     @Override
     public void setBall(Elements color, int x, int y) {
-        Point pt = pt(x, y);
-        if (!balls.contains(pt)) {
-            balls.add(new Ball(color, x, y));
+       /* Point pt = pt(x, y);
+        for (int m=0; m<balls.size(); m++){
+           System.out.println("ball index m = " + m+", x: "+balls.get(m).getX() +", y: "+ balls.get(m).getY() +", color "+ balls.get(m).getColor().ch);
         }
+
+        if (balls.contains(pt)) {
+            Ball currentBall = balls.get(balls.indexOf(pt));
+            Elements currentColor = currentBall.getColor();
+           // System.out.println("ball color changed 1 " + balls.get(balls.indexOf(pt)).getColor());
+            balls.get(balls.indexOf(pt)).setColor(color);
+           // System.out.println("ball color changed 2 " + balls.get(balls.indexOf(pt)).getColor());
+            Point adjacentBall = Direction.LEFT.change(currentBall);
+            balls.get(balls.indexOf(adjacentBall)).setColor(currentColor);
+        }
+
+        System.out.println("-----------------------------------");
+
+        for (int m=0; m<balls.size(); m++){
+            System.out.println("ball index m = " + m+", x: "+balls.get(m).getX() +", y: "+ balls.get(m).getY() +", color "+ balls.get(m).getColor().ch);
+        }*/
     }
+
+    private void burnLine(){
+        //TODO проверить сначала если рядом два элемента такого же цвета
+    }
+
+
+
+    private void replaceBalls(Ball ball){
+        System.out.println("ball x " + ball.getX() + ", y " + ball.getY());
+        Point adjacentBall = Direction.LEFT.change(ball);
+        System.out.println("adjacentBall x " + adjacentBall.getX() + ", y " + adjacentBall.getY());
+
+        //balls.get(balls.indexOf(pt)).setColor(color);
+       // adjacentBall.changeBallColor();
+    }
+
 
     @Override
     public void removeBall(int x, int y) {

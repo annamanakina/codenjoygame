@@ -35,10 +35,15 @@ import com.codenjoy.dojo.services.multiplayer.PlayerHero;
  */
 public class Hero extends PlayerHero<Field> implements ActJoystick {
 
-    //TODO constructor //4.03 was like that
-    public Hero(Point xy) {
+    //private char color = 'W';
+    /*public Hero(Point xy) {
         super(xy);
+    }*/
+
+    public Hero() {
+        super();
     }
+
 
     @Override
     public void init(Field field) {
@@ -65,13 +70,15 @@ public class Hero extends PlayerHero<Field> implements ActJoystick {
     @Override
     public void act(int... p) {
     //TODO do smth here
+        this.x = p[0];
+        this.y = p[1];
+       // System.out.println("hero act: x:" + p[0] + ", y:"+p[1]);
     }
 
     @Override
     public void tick() {
-//TODO
+        field.moveBalls(x, y);
     }
-
 
     //пока будет true, потом посмотрим
     public boolean isAlive() {
