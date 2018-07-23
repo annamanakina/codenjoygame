@@ -121,6 +121,17 @@ public class Lines implements Field {
         return firstBall.isSameColor(nextBall);
     }
 
+    private boolean isNextTwoBallsEqualHorizontal(Point pt){
+        Point firstPT = Direction.LEFT.change(pt);
+        Ball firstBall = getBall(firstPT);
+
+        Point nextPT = Direction.LEFT.change(firstPT);
+        Ball nextBall = getBall(nextPT);
+
+        return firstBall.isSameColor(nextBall);
+    }
+
+
     @Override
     public void moveBalls(int x, int y) {
         Point pt = pt(x, y);
@@ -128,10 +139,13 @@ public class Lines implements Field {
 
         Direction.getValues().forEach(direction -> {
             Ball ball = getBall(direction.change(pt));
-
             if (direction == Direction.LEFT) {
 
                     if (isBallsEqualBetweenVertical(ball)) {
+                        changeColor(currentBall, ball);
+                    }
+
+                    if (isNextTwoBallsEqualHorizontal(ball)){
                         changeColor(currentBall, ball);
                     }
             }

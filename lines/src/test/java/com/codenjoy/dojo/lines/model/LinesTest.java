@@ -130,6 +130,34 @@ public class LinesTest {
                          "          ");
     }
 
+    @Test
+    public void shouldMoveBall_left_checkIfNextTwoHasTheSameColor_horizontal() {
+        givenFl(" B B      " +
+                " Y Y W    " +
+                " BBGBWW   " +
+                "   BY     " +
+                "   Y G    " +
+                "          " +
+                "          " +
+                "          " +
+                "          " +
+                "          ");
+
+        hero.act(4, 7);
+        game.tick();
+
+        assertE(" B B      " +
+                " Y Y W    " +
+                " BBBGWW   " +
+                "   BY     " +
+                "   Y G    " +
+                "          " +
+                "          " +
+                "          " +
+                "          " +
+                "          ");
+    }
+
 
 
 
