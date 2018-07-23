@@ -104,7 +104,7 @@ public class LinesTest {
     //move ball to the left
     @Test
     public void shouldMoveBall_left_checkIfNextBetweenHasTheSameColor() {
-        givenFl(" B B      " +
+        givenFl(" B Y      " +
                        " Y B W    " +
                        " BYGBWW   " +
                        "   BY     " +
@@ -118,7 +118,7 @@ public class LinesTest {
         hero.act(4, 7);
         game.tick();
 
-        assertE(" B B      " +
+        assertE(" B Y      " +
                          " Y B W    " +
                          " BYBGWW   " +
                          "   BY     " +
@@ -132,12 +132,40 @@ public class LinesTest {
 
     @Test
     public void shouldMoveBall_left_checkIfNextTwoHasTheSameColor_horizontal() {
-        givenFl(" B B      " +
-                " Y Y W    " +
-                " BBGBWW   " +
-                "   BY     " +
-                "   Y G    " +
-                "          " +
+        givenFl(" B Y      " +
+                       " Y B W    " +
+                       " BYGBWW   " +
+                       "   BY     " +
+                       "   Y G    " +
+                       "          " +
+                       "          " +
+                       "          " +
+                       "          " +
+                       "          ");
+
+        hero.act(4, 7);
+        game.tick();
+
+        assertE(" B Y      " +
+                         " Y B W    " +
+                         " BYBGWW   " +
+                         "   BY     " +
+                         "   Y G    " +
+                         "          " +
+                         "          " +
+                         "          " +
+                         "          " +
+                         "          ");
+    }
+
+    @Test
+    public void shouldMoveBall_left_up_checkIfNextTwoHasTheSameColor() {
+        givenFl(" B Y      " +
+                       " Y B W    " +
+                       " BYGBWW   " +
+                       "   BY     " +
+                       "   Y G    " +
+                       "          " +
                 "          " +
                 "          " +
                 "          " +
@@ -146,16 +174,16 @@ public class LinesTest {
         hero.act(4, 7);
         game.tick();
 
-        assertE(" B B      " +
-                " Y Y W    " +
-                " BBBGWW   " +
-                "   BY     " +
-                "   Y G    " +
-                "          " +
-                "          " +
-                "          " +
-                "          " +
-                "          ");
+        assertE(" B Y      " +
+                         " Y B W    " +
+                         " BYBGWW   " +
+                         "   BY     " +
+                         "   Y G    " +
+                         "          " +
+                         "          " +
+                         "          " +
+                         "          " +
+                         "          ");
     }
 
 
