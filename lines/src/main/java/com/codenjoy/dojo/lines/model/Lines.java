@@ -10,12 +10,12 @@ package com.codenjoy.dojo.lines.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -31,6 +31,7 @@ import com.codenjoy.dojo.services.printer.BoardReader;
 import javax.lang.model.element.Element;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 
 import static com.codenjoy.dojo.services.PointImpl.pt;
@@ -47,7 +48,7 @@ public class Lines implements Field {
 
     private List<Ball> balls;
     private List<Player> players; //игрок один у нас будет
-   // private Level level;
+    // private Level level;
 
     private final int size;
     private Dice dice;
@@ -98,9 +99,9 @@ public class Lines implements Field {
         return !balls.contains(pt);
   }*/
 
-    private void changeColor(Ball first, Ball next){
+    private void changeColor(Ball first, Ball next) {
         Elements firstColor = first.getColor();
-        System.out.println(" changeColor first " +first );
+        System.out.println(" changeColor first " + first);
         Elements nextColor = next.getColor();
         System.out.println("changeColor currentBall " + next);
         balls.get(balls.indexOf(next)).setColor(firstColor);
@@ -108,95 +109,112 @@ public class Lines implements Field {
         //TODO burn line
     }
 
-    private Ball getBall(Point pt){
+    private void burnLine() {
+        //TODO проверить сначала если рядом два элемента такого же цвета
+    }
+
+
+    private boolean isBoader(Point pt) {
+        boolean boader = false;
+        if (((pt.getX() <= 9) & (pt.getX() >= 0)) & ((pt.getY() <= 9) & (pt.getY() >= 0))) {
+            boader = true;
+        }
+        return boader;
+    }
+
+    private Ball getBall(Point pt) {
         return balls.stream()
                 .filter(Predicate.isEqual(pt))
                 .findFirst().orElseThrow(() -> new UnsupportedOperationException()); //TODO Exception
     }
 
-    private boolean isBallsEqualBetweenVertical(Ball currentBall, Point pt){
+    private boolean isBallsEqualBetweenVertical(Ball currentBall, Point pt) {
+        boolean isEqual = false;
         Point firstPT = Direction.UP.change(pt);
-        Ball firstBall = getBall(firstPT);
-        System.out.println("isBallsEqualBetweenVertical  ball "+firstBall +", color " + firstBall.getColor());
-        Point nextPT = Direction.DOWN.change(pt);
-        Ball nextBall = getBall(nextPT);
-        System.out.println("isBallsEqualBetweenVertical  ball "+nextBall +", color " + nextBall.getColor());
-        System.out.println("\r\n");
-        return currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+        if (isBoader(firstPT)) {
+            Ball firstBall = getBall(firstPT);
+            Point nextPT = Direction.DOWN.change(pt);
+            if (isBoader(nextPT)) {
+                Ball nextBall = getBall(nextPT);
+                isEqual = currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+            }
+        }
+        return isEqual;
     }
 
-    private boolean isNextTwoBallsEqualHorizontal(Ball currentBall, Point pt){
+    private boolean isNextTwoBallsEqualHorizontal(Ball currentBall, Point pt) {
+        boolean isEqual = false;
         Point firstPT = Direction.LEFT.change(pt);
-        Ball firstBall = getBall(firstPT);
-        System.out.println("isNextTwoBallsEqualHorizontal  ball "+firstBall +", color " + firstBall.getColor());
-        Point nextPT = Direction.LEFT.change(firstPT);
-        Ball nextBall = getBall(nextPT);
-        System.out.println("isNextTwoBallsEqualHorizontal  ball "+nextBall +", color " + nextBall.getColor());
-        System.out.println("\r\n");
-        return currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+        if (isBoader(firstPT)) {
+            Ball firstBall = getBall(firstPT);
+            Point nextPT = Direction.LEFT.change(firstPT);
+            if (isBoader(nextPT)) {
+                Ball nextBall = getBall(nextPT);
+                isEqual = currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+            }
+        }
+        return isEqual;
     }
 
-    private boolean isNextTwoBallsEqualUpVertical(Ball currentBall, Point pt){
+    private boolean isNextTwoBallsEqualUpVertical(Ball currentBall, Point pt) {
+        boolean isEqual = false;
         Point firstPT = Direction.UP.change(pt);
-        Ball firstBall = getBall(firstPT);
-        System.out.println("isNextTwoBallsEqualUpVertical  ball "+firstBall +", color " + firstBall.getColor());
-        Point nextPT = Direction.UP.change(firstPT);
-        Ball nextBall = getBall(nextPT);
-        System.out.println("isNextTwoBallsEqualUpVertical  ball "+nextBall +", color " + nextBall.getColor());
-        System.out.println("\r\n");
-        return currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+        if (isBoader(firstPT)) {
+            Ball firstBall = getBall(firstPT);
+            Point nextPT = Direction.UP.change(firstPT);
+            if (isBoader(nextPT)) {
+                Ball nextBall = getBall(nextPT);
+                isEqual = currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+            }
+        }
+        return isEqual;
     }
 
-    private boolean isNextTwoBallsEqualDownVertical(Ball currentBall, Point pt){
+    private boolean isNextTwoBallsEqualDownVertical(Ball currentBall, Point pt) {
+        boolean isEqual = false;
         Point firstPT = Direction.DOWN.change(pt);
-        Ball firstBall = getBall(firstPT);
-        System.out.println("isNextTwoBallsEqualDownVertical  ball "+firstBall +", color " + firstBall.getColor());
-        Point nextPT = Direction.DOWN.change(firstPT);
-        Ball nextBall = getBall(nextPT);
-        System.out.println("isNextTwoBallsEqualDownVertical  ball "+nextBall +", color " + nextBall.getColor());
-        System.out.println("\r\n");
-        return currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+        if (isBoader(firstPT)) {
+            Ball firstBall = getBall(firstPT);
+            Point nextPT = Direction.DOWN.change(firstPT);
+            if (isBoader(nextPT)) {
+                Ball nextBall = getBall(nextPT);
+                isEqual = currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+            }
+        }
+        return isEqual;
     }
-
 
     @Override
     public void moveBalls(int x, int y) {
         Point pt = pt(x, y);
         Ball currentBall = getBall(pt);
-        System.out.println(" moveBalls currentBall " +currentBall +", color " + currentBall.getColor());
 
         Direction.getValues().forEach(direction -> {
-            Ball ball = getBall(direction.change(pt));
-            System.out.println(" moveBalls ball "  +ball+", color " + ball.getColor());
+            Point nextPT = direction.change(pt);
+            if (isBoader(nextPT)) {
+                Ball ball = getBall(nextPT);
+                System.out.println(" moveBalls ball " + ball + ", color " + ball.getColor());
+                System.out.println("direction " + direction);
 
-            //просмотр элементов только относительно текущей позиции 4,7
-            if (direction == Direction.LEFT) {
-                   if (isBallsEqualBetweenVertical(currentBall, ball)) {
-                        changeColor(currentBall, ball);
+                if (isBallsEqualBetweenVertical(currentBall, ball)) {
+                    changeColor(currentBall, ball);
+                }
 
-                        System.out.println("isBallsEqualBetweenVertical changeColor currentBall "+ currentBall +", color " + currentBall.getColor());
-                        System.out.println("isBallsEqualBetweenVertical changeColor ball "+ball +", color " + ball.getColor());
-                        System.out.println("\r\n");
-                   }
+                if (isNextTwoBallsEqualHorizontal(currentBall, ball)) {
+                    changeColor(currentBall, ball);
+                }
 
-                    if ( isNextTwoBallsEqualHorizontal(currentBall, ball)) {
-                        System.out.println("isNextTwoBallsEqualHorizontal changeColor " );
-                        changeColor(currentBall, ball);
-                    }
+                if (isNextTwoBallsEqualUpVertical(currentBall, ball)) {
+                    changeColor(currentBall, ball);
+                }
 
-                    if ( isNextTwoBallsEqualUpVertical(currentBall, ball)){
-                        changeColor(currentBall, ball);
-                        System.out.println(" isNextTwoBallsEqualUpVertical true" );
-                    }
-
-                    if ( isNextTwoBallsEqualDownVertical(currentBall, ball)){
-                        changeColor(currentBall, ball);
-                        System.out.println(" isNextTwoBallsEqualDownVertical true" );
-                    }
+                if (isNextTwoBallsEqualDownVertical(currentBall, ball)) {
+                    changeColor(currentBall, ball);
+                }
             }
-           // System.out.println(" direction " +direction.toString() );
         });
     }
+
 
     @Override
     public void setBall(Elements color, int x, int y) {
@@ -221,11 +239,6 @@ public class Lines implements Field {
             System.out.println("ball index m = " + m+", x: "+balls.get(m).getX() +", y: "+ balls.get(m).getY() +", color "+ balls.get(m).getColor().ch);
         }*/
     }
-
-    private void burnLine(){
-        //TODO проверить сначала если рядом два элемента такого же цвета
-    }
-
 
     @Override
     public void removeBall(int x, int y) {
