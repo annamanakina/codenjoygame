@@ -186,7 +186,34 @@ public class LinesTest {
                          "          ");
     }
 
+    //can move element if next two down elements have the same color
+    @Test
+    public void shouldMoveBall_left_down_checkIfNextTwoHasTheSameColor() {
+        givenFl(" B Y      " +
+                " Y Y W    " +
+                " BYGBWW   " +
+                "   BY     " +
+                "   Y G    " +
+                "          " +
+                "          " +
+                "          " +
+                "          " +
+                "          ");
 
+        hero.act(4, 7);
+        game.tick();
+
+        assertE(" B Y      " +
+                " Y Y W    " +
+                " BYGBWW   " +
+                "   BY     " +
+                "   Y G    " +
+                "          " +
+                "          " +
+                "          " +
+                "          " +
+                "          ");
+    }
 
 
     // я ходить
