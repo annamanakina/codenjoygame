@@ -101,28 +101,28 @@ public class LinesTest {
     }
 
 
-    //move ball to the right
+    //move ball to the left
     @Test
-    public void shouldMoveBall_right() {
-        givenFl("          " +
-                       "    W     " +
-                       "   W WW   " +
-                       "    Y     " +
-                       "     G    " +
+    public void shouldMoveBall_left_checkIfNextBetweenHasTheSameColor() {
+        givenFl(" B B      " +
+                       " Y B W    " +
+                       " BYGBWW   " +
+                       "   BY     " +
+                       "   Y G    " +
                        "          " +
                        "          " +
                        "          " +
                        "          " +
                        "          ");
 
-        hero.act(3, 7);
+        hero.act(4, 7);
         game.tick();
 
-        assertE("          " +
-                         "    W     " +
-                         "    WWW   " +
-                         "    Y     " +
-                         "     G    " +
+        assertE(" B B      " +
+                         " Y B W    " +
+                         " BYBGWW   " +
+                         "   BY     " +
+                         "   Y G    " +
                          "          " +
                          "          " +
                          "          " +

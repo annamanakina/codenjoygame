@@ -55,6 +55,10 @@ public class Ball extends PointImpl implements State<Elements, Player> {
         this.color = color;
     }
 
+    public boolean isSameColor(Ball anotherBall) {
+        return this.color == anotherBall.color;
+    }
+
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         if (color == Elements.BLUE)

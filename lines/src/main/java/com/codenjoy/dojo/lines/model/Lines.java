@@ -98,15 +98,12 @@ public class Lines implements Field {
         return !balls.contains(pt);
   }*/
 
-    private void changeColor(Ball currentBall){
-        Elements currentColor = currentBall.getColor();
-        //get right element
-        Point adjacentPT = Direction.RIGHT.change(currentBall);
-        Ball adjacentBall = getBall(adjacentPT);
-        Elements adjacentColor = adjacentBall.getColor();
-        //change color between this two elements
-        balls.get(balls.indexOf(currentBall)).setColor(adjacentColor);
-        balls.get(balls.indexOf(adjacentBall)).setColor(currentColor);
+    private void changeColor(Ball first, Ball next){
+        Elements firstColor = first.getColor();
+        Elements nextColor = next.getColor();
+        System.out.println("changeColor currentBall " + next);
+        balls.get(balls.indexOf(next)).setColor(firstColor);
+        balls.get(balls.indexOf(first)).setColor(nextColor);
     }
 
     private Ball getBall(Point pt){
@@ -115,28 +112,30 @@ public class Lines implements Field {
                 .findFirst().orElseThrow(() -> new UnsupportedOperationException()); //TODO Exception
     }
 
+    private boolean isBallsEqualBetweenVertical(Point pt){
+        Point firstPT = Direction.UP.change(pt);
+        Ball firstBall = getBall(firstPT);
+        Point nextPT = Direction.DOWN.change(pt);
+        Ball nextBall = getBall(nextPT);
 
-    //TODO ИСПРАВИТЬ для левой стороны, для верха и низа если две элемента рядом
-    private boolean isBallsEqualsOnTheRight(Point pt){
-        Point firstRightPT = Direction.RIGHT.change(pt);
-        Point secondRightPT = Direction.RIGHT.change(firstRightPT);
-        Ball secondRightBall = getBall(secondRightPT);
-        //System.out.println("isBallsEqualsOnTheRight secondRightBall " + secondRightBall.getX() + ", " + secondRightBall.getY());
-
-        Point nextRightPT = Direction.RIGHT.change(secondRightBall);
-        Ball nextRightBall = getBall(nextRightPT);
-
-       // System.out.println("isBallsEqualsOnTheRight nextRightBall " + nextRightBall.getX() + ", " + nextRightBall.getY());
-        return secondRightBall.getColor().equals(nextRightBall.getColor());
+        return firstBall.isSameColor(nextBall);
     }
 
     @Override
     public void moveBalls(int x, int y) {
         Point pt = pt(x, y);
-        if (isBallsEqualsOnTheRight(pt)){
-            Ball ball = getBall(pt);
-           changeColor(ball);
-        }
+        Ball currentBall = getBall(pt);
+
+        Direction.getValues().forEach(direction -> {
+            Ball ball = getBall(direction.change(pt));
+
+            if (direction == Direction.LEFT) {
+
+                    if (isBallsEqualBetweenVertical(ball)) {
+                        changeColor(currentBall, ball);
+                    }
+            }
+        });
     }
 
     @Override
@@ -165,17 +164,6 @@ public class Lines implements Field {
 
     private void burnLine(){
         //TODO проверить сначала если рядом два элемента такого же цвета
-    }
-
-
-
-    private void replaceBalls(Ball ball){
-        System.out.println("ball x " + ball.getX() + ", y " + ball.getY());
-        Point adjacentBall = Direction.LEFT.change(ball);
-        System.out.println("adjacentBall x " + adjacentBall.getX() + ", y " + adjacentBall.getY());
-
-        //balls.get(balls.indexOf(pt)).setColor(color);
-       // adjacentBall.changeBallColor();
     }
 
 
