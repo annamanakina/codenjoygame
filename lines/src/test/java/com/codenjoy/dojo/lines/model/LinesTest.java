@@ -215,55 +215,68 @@ public class LinesTest {
                 "          ");
     }
 
+    //can move element and check if element is not going off the border
+    @Test
+    public void shouldMoveBall_inAllDirectionsAndCheckIfIsNotBoader() {
+        givenFl(" B Y      " +
+                " Y B W    " +
+                " BYGBWW   " +
+                "   BY     " +
+                "   Y G    " +
+                "          " +
+                "G         " +
+                "RG        " +
+                "G         " +
+                "          ");
 
-    // я ходить
-    /*@Test
-    public void shouldWalk() {
-        givenFl("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
-
-        hero.left();
+        hero.act(1, 2);
         game.tick();
 
-        assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼☺  ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
-
-        hero.right();
-        game.tick();
-
-        assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
-
-        hero.up();
-        game.tick();
-
-        assertE("☼☼☼☼☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
-
-        hero.down();
-        game.tick();
-
-        assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
+        assertE(" B Y      " +
+                " Y B W    " +
+                " BYGBWW   " +
+                "   BY     " +
+                "   Y G    " +
+                "          " +
+                "G         " +
+                "GR        " +
+                "G         " +
+                "          ");
     }
 
-    // если небыло команды я никуда не иду
     @Test
+    public void shouldMoveBall_inAllDirections() {
+        givenFl(" B Y      " +
+                " Y B W    " +
+                " BYGBWW   " +
+                " YYBY     " +
+                "  RY G    " +
+                "   Y      " +
+                "G YBR     " +
+                "RGWBRYGBWR" +
+                "G BGYWRYRW" +
+                "     WRBRW");
+
+        hero.act(9, 2);
+        game.tick();
+
+        assertE(" B Y      " +
+                " Y B W    " +
+                " BYGBWW   " +
+                " YYBY     " +
+                "  RY G    " +
+                "   Y      " +
+                "G YBR     " +
+                "RGWBRYGBRW" +
+                "G BGYWRYRW" +
+                "     WRBRW");
+    }
+
+
+
+
+    // если небыло команды я никуда не иду
+   /* @Test
     public void shouldStopWhenNoMoreRightCommand() {
         givenFl("☼☼☼☼☼" +
                 "☼   ☼" +
