@@ -244,6 +244,7 @@ public class LinesTest {
                 "          ");
     }
 
+    
     @Test
     public void shouldMoveBall_inAllDirections() {
         givenFl(" B Y      " +
