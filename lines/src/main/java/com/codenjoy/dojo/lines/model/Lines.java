@@ -75,7 +75,26 @@ public class Lines implements Field {
         return size;
     }
 
-   /* @Override
+    @Override
+    public String fillFieldRandom() {
+        Elements[] elements = Elements.values();
+        int count = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        do {
+            int index = new Random().nextInt(elements.length);
+            if (index == 0) continue;
+            stringBuilder.append(elements[index]);
+            count++;
+            System.out.println(elements[index] + " " + count);
+
+        } while (count < balls.size());
+        System.out.print("\r\n" + count);
+
+        return stringBuilder.toString();
+    }
+
+    /* @Override
     public Point getFreeRandom() {
         int x;
         int y;
@@ -101,18 +120,35 @@ public class Lines implements Field {
 
     private void changeColor(Ball first, Ball next) {
         Elements firstColor = first.getColor();
-       // System.out.println(" changeColor first " + first);
+        // System.out.println(" changeColor first " + first);
         Elements nextColor = next.getColor();
-       // System.out.println("changeColor currentBall " + next);
+        // System.out.println("changeColor currentBall " + next);
         balls.get(balls.indexOf(next)).setColor(firstColor);
         balls.get(balls.indexOf(first)).setColor(nextColor);
+
         //TODO burn line
+        //burnLine(next);
     }
 
-    private void burnLine() {
-        //TODO проверить сначала если рядом два элемента такого же цвета
-    }
+    private void burnLine(Ball startBall) {
+        //System.out.println("burnLine startBall " + startBall + ", " + startBall.getColor());
+        int i = startBall.getX();
+        int j = startBall.getY();
+        Elements newColor;
 
+        for (int m = i; m < i + 3; m++) {
+
+            int n = j;
+            for (++n; n < 10; n++) {
+                Point pt = pt(m, n);
+                newColor = getBall(pt).getColor();
+                getBall(pt(m, n - 1)).setColor(newColor);
+                if (n == 9) {
+                    getBall(pt(m, n)).setColor(Elements.NONE);
+                }
+            }
+        }
+    }
 
     private boolean isBoader(Point pt) {
         boolean boader = false;
@@ -178,7 +214,7 @@ public class Lines implements Field {
             Point nextPT = Direction.RIGHT.change(firstPT);
             if (isBoader(nextPT)) {
                 Ball nextBall = getBall(nextPT);
-               isEqual = currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
+                isEqual = currentBall.isSameColor(firstBall) & firstBall.isSameColor(nextBall);
             }
         }
         return isEqual;
@@ -216,13 +252,14 @@ public class Lines implements Field {
     public void moveBalls(int x, int y) {
         Point pt = pt(x, y);
         Ball currentBall = getBall(pt);
+        //System.out.println("moveBalls currentBall " + currentBall);
 
         Direction.getValues().forEach(direction -> {
             Point nextPT = direction.change(pt);
-            if (isBoader(nextPT)){
-            //if (!nextPT.isOutOf(balls.size())) {
+            if (isBoader(nextPT)) {
+                //if (!nextPT.isOutOf(balls.size())) {
                 Ball ball = getBall(nextPT);
-
+                //System.out.println("moveBalls ball " + ball +" " +ball.getColor());
                 switch (direction) {
                     case LEFT:
                         if (isBallsEqualBetweenVertical(currentBall, ball)) {
@@ -248,6 +285,7 @@ public class Lines implements Field {
                         }
                         if (isNextTwoRightBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLine(ball);
                         }
 
                         if (isNextTwoBallsEqualUpVertical(currentBall, ball)) {

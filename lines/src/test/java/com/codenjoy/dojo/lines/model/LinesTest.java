@@ -33,6 +33,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
+import java.util.Random;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -48,6 +50,9 @@ public class LinesTest {
     private Player player;
     private PrinterFactory printer = new PrinterFactoryImpl();
 
+   // private String copyRandomString;
+   // private String randomString = copyRandomString = fillFieldRandom(100);
+
     @Before
     public void setup() {
         dice = mock(Dice.class);
@@ -59,6 +64,22 @@ public class LinesTest {
             when = when.thenReturn(i);
         }
     }
+
+    /*private String fillFieldRandom(int size) {
+        Elements[] elements = Elements.values();
+        int count = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        do {
+            int index = new Random().nextInt(elements.length);
+            if (index == 0) continue;
+            stringBuilder.append(elements[index]);
+            count++;
+        } while (count < size);
+       // System.out.println("\r\n" + count);
+       // System.out.print(stringBuilder.toString());
+        return stringBuilder.toString();
+    }*/
 
     private void givenFl(String board) {
         Level level = new LevelImpl(board);
@@ -73,6 +94,17 @@ public class LinesTest {
         assertEquals(TestUtils.injectN(expected),
                 printer.getPrinter(game.reader(), player).print());
     }
+
+
+   /* private void givenRandomField(int size) {
+        Level level = new LevelImpl(size);
+        game = new Lines(level, dice);
+        game.fillFieldRandom();
+        listener = mock(EventListener.class);
+        player = new Player(listener);
+        game.newGame(player);
+        hero = game.getHeroes().get(0);
+    }*/
 
     // есть карта со мной
     @Test
@@ -244,7 +276,6 @@ public class LinesTest {
                 "          ");
     }
 
-    
     @Test
     public void shouldMoveBall_inAllDirections() {
         givenFl(" B Y      " +
@@ -273,131 +304,82 @@ public class LinesTest {
                 "     WRBRW");
     }
 
-
-
-
-    // если небыло команды я никуда не иду
-   /* @Test
-    public void shouldStopWhenNoMoreRightCommand() {
-        givenFl("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼  ☺☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
-
-        hero.left();
+    //fill the game field by random elements
+    //because of random this case does not always work as expected
+    /*@Test
+    public void fillGameFieldRandomly() {
+        givenFl(randomString);
+        System.out.println("randomString " + randomString);
+        hero.act(5, 3);
         game.tick();
 
-        assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
+        assertE(copyRandomString);
+        System.out.println("copyRandomString " + copyRandomString);
+    }*/
 
-        game.tick();
 
-        assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
-    }
-
-    // я останавливаюсь возле границы
+    //test burnline Method (right)
     @Test
-    public void shouldStopWhenWallRight() {
-        givenFl("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼  ☺☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
+    public void shouldChangeColorWhenThreeSameColorInLine_right() {
+        givenFl(" B YRBW   " +
+                       " Y BWWG   " +
+                       " BYGBWW   " +
+                       " YRBYBB   " +
+                       "  RY G    " +
+                       "   Y      " +
+                       "G YBR     " +
+                       "RGWBRYGBWR" +
+                       "G BGYWRYRW" +
+                       "     WRBRW");
 
-        hero.right();
+        hero.act(3, 6);
         game.tick();
 
-        assertE("☼☼☼☼☼" +
-                        "☼   ☼" +
-                        "☼  ☺☼" +
-                        "☼   ☼" +
-                        "☼☼☼☼☼");
+        assertE(" B Y      " +
+                         " Y BRBW   " +
+                         " BYGWWG   " +
+                         " YRYBWW   " +
+                         "  RY G    " +
+                         "   Y      " +
+                         "G YBR     " +
+                         "RGWBRYGBWR" +
+                         "G BGYWRYRW" +
+                         "     WRBRW");
     }
 
+    //additional test burnline Method (right)
     @Test
-    public void shouldStopWhenWallLeft() {
-        givenFl("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼☺  ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
+    public void shouldChangeColorWhenThreeSameColorInLine_right2() {
+        givenFl(" B YRBW   " +
+                       " Y BWWG   " +
+                       " BYGBWW   " +
+                       " YRBYBB   " +
+                       "  RY G    " +
+                       "   Y      " +
+                       "G YBR     " +
+                       "RGGWGGBWR " +
+                       "G BGYWRYRW" +
+                       "     WRBRW");
 
-        hero.left();
+        hero.act(2, 2);
         game.tick();
 
-        assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼☺  ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
+        assertE(" B    W   " +
+                         " Y YRBG   " +
+                         " BYBWWW   " +
+                         " YRGBWB   " +
+                         "  RBYB    " +
+                         "   Y G    " +
+                         "G YY      " +
+                         "RGWBR BWR " +
+                         "G BGYWRYRW" +
+                         "     WRBRW");
     }
 
-    @Test
-    public void shouldStopWhenWallUp() {
-        givenFl("☼☼☼☼☼" +
-                "☼ ☼ ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
 
-        hero.up();
-        game.tick();
-
-        assertE("☼☼☼☼☼" +
-                "☼ ☼ ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
-    }
-
-    @Test
-    public void shouldStopWhenWallDown() {
-        givenFl("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼ ☼ ☼" +
-                "☼☼☼☼☼");
-
-        hero.down();
-        game.tick();
-
-        assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼ ☼ ☼" +
-                "☼☼☼☼☼");
-    }
-
-    // я могу оставить бомбу
-    @Test
-    public void shouldMakeBomb() {
-        givenFl("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ ☺ ☼" +
-                "☼   ☼" +
-                "☼☼☼☼☼");
-
-        hero.act();
-        hero.down();
-        game.tick();
-
-        assertE("☼☼☼☼☼" +
-                "☼   ☼" +
-                "☼ x ☼" +
-                "☼ ☺ ☼" +
-                "☼☼☼☼☼");
-    }
 
     // на бомбе я взрываюсь
-    @Test
+    /*@Test
     public void shouldDieOnBomb() {
         shouldMakeBomb();
 

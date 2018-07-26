@@ -49,6 +49,8 @@ public interface Field extends GameField<Player> {
 
     List<Ball> getBalls();
 
+    String fillFieldRandom();
+
     //void setBall(Elements color, int x, int y);
 
     //void removeBall(int x, int y);

@@ -30,6 +30,7 @@ import org.omg.CORBA.BAD_CONTEXT;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -47,10 +48,34 @@ public class LevelImpl implements Level {
         xy = new LengthToXY(getSize());
     }
 
+    /*public LevelImpl(int size) {
+        this.map = fillFieldRandom(size);
+        xy = new LengthToXY(getSize());
+    }*/
+
     @Override
     public int getSize() {
         return (int) Math.sqrt(map.length());
     }
+
+
+    /*public String fillFieldRandom(int size) {
+        Elements [] elements = Elements.values();
+        int count=0;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        do {
+            int index = new Random().nextInt(elements.length);
+            if (index == 0) continue;
+            stringBuilder.append(elements[index]);
+            count++;
+            System.out.println(elements[index]+" " + count);
+
+        } while(count<size);
+        System.out.print("\r\n"+count);
+
+        return stringBuilder.toString();
+    }*/
 
     @Override
     public List<Ball> getBalls() {
