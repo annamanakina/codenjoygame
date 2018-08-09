@@ -407,6 +407,65 @@ public class LinesTest {
                          "     WRBRW");
     }
 
+    //test burnline Method (right)
+    @Test
+    public void shouldChangeColorWhenThreeSameColorInLine_rightUpVertical() {
+        givenFl( " B YRBW   " +
+                        " Y BWWG   " +
+                        " BYGBWW   " +
+                        " YRBWBB   " +
+                        "  RYBG    " +
+                        "   Y      " +
+                        "G YBR     " +
+                        "RGWBRYGBWR" +
+                        "G BGYWRYRW" +
+                        "     WRBRW");
+
+        hero.act(4, 6);
+        game.tick();
+
+        assertE(" B YR W   " +
+                         " Y BW G   " +
+                         " BYGB W   " +
+                         " YRBBBB   " +
+                         "  RYBG    " +
+                         "   Y      " +
+                         "G YBR     " +
+                         "RGWBRYGBWR" +
+                         "G BGYWRYRW" +
+                         "     WRBRW");
+    }
+
+    //test burnline Method once more(right) case UpVertical
+    @Test
+    public void shouldChangeColorWhenThreeSameColorInLine_rightUpVertical2() {
+        givenFl( " B YRBW   " +
+                        " Y BWWG   " +
+                        " BYGBWW   " +
+                        " YRBWBB   " +
+                        "  RYBG    " +
+                        "   Y      " +
+                        "G YBR     " +
+                        "RGWBRYGBWR" +
+                        "G BGYWRYRW" +
+                        "     WRBRW");
+
+        hero.act(2, 1);
+        game.tick();
+
+        assertE(" B  RBW   " +
+                         " Y  WWG   " +
+                         " BY BWW   " +
+                         " YRYWBB   " +
+                         "  RBBG    " +
+                         "   G      " +
+                         "G YBR     " +
+                         "RGWYRYGBWR" +
+                         "G GYYWRYRW" +
+                         "     WRBRW");
+    }
+
+
     // на бомбе я взрываюсь
     /*@Test
     public void shouldDieOnBomb() {

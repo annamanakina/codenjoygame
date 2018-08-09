@@ -176,6 +176,38 @@ public class Lines implements Field {
         }
     }
 
+    //если три равны вертикально вверхё
+    private void burnLineUpVertical(Ball startBall) {
+        //System.out.println("burnLine startBall " + startBall + ", " + startBall.getColor());
+        int i = startBall.getX();
+        int j = startBall.getY();
+
+        Elements newColor;
+
+        //берем второй верхний элемент от начального
+        int n = j + 3;
+        int index = 0;
+        //System.out.println("burnLineUpVertical n " + n);
+        for (; n < 10; n++) {
+            Point pt = pt(i, n);
+            newColor = getBall(pt).getColor();
+            index = n-3;
+            getBall(pt(i, index)).setColor(newColor);
+            //System.out.println("burnLineUpVertical index " + index);
+              /*  if (n == 9) {
+                    n = n-3;
+                    for (; n <10; n++){
+                    getBall(pt(i, n)).setColor(Elements.NONE); //TODO replace later for random
+                    }
+                }*/
+        }
+        //System.out.println("burnLineUpVertical index " + ++index);
+
+        for (; index < 10; index++) {
+            getBall(pt(i, index)).setColor(Elements.NONE);
+        }
+    }
+
     private boolean isBoader(Point pt) {
         boolean boader = false;
         if (((pt.getX() <= 9) & (pt.getX() >= 0)) & ((pt.getY() <= 9) & (pt.getY() >= 0))) {
@@ -318,6 +350,7 @@ public class Lines implements Field {
 
                         if (isNextTwoBallsEqualUpVertical(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineUpVertical(ball);
                         }
 
                         if (isNextTwoBallsEqualDownVertical(currentBall, ball)) {
