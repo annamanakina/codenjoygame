@@ -187,25 +187,34 @@ public class Lines implements Field {
         //берем второй верхний элемент от начального
         int n = j + 3;
         int index = 0;
-        //System.out.println("burnLineUpVertical n " + n);
-        for (; n < 10; n++) {
-            Point pt = pt(i, n);
-            newColor = getBall(pt).getColor();
-            index = n-3;
-            getBall(pt(i, index)).setColor(newColor);
-            //System.out.println("burnLineUpVertical index " + index);
+        System.out.println("burnLineUpVertical n " + n);
+
+        if (n == 10) {
+            for (; j < 10; j++) {
+                getBall(pt(i, j)).setColor(Elements.NONE); //TODO replace later for random
+            }
+
+        } else {
+            for (; n < 10; n++) {
+                Point pt = pt(i, n);
+                newColor = getBall(pt).getColor();
+                index = n - 3;
+                getBall(pt(i, index)).setColor(newColor);
+                System.out.println("burnLineUpVertical index " + index);
               /*  if (n == 9) {
                     n = n-3;
                     for (; n <10; n++){
                     getBall(pt(i, n)).setColor(Elements.NONE); //TODO replace later for random
                     }
                 }*/
+            }
+            ++index;
+            for (; index < 10; index++) {
+                getBall(pt(i, index)).setColor(Elements.NONE);
+            }
         }
         //System.out.println("burnLineUpVertical index " + ++index);
 
-        for (; index < 10; index++) {
-            getBall(pt(i, index)).setColor(Elements.NONE);
-        }
     }
 
     private boolean isBoader(Point pt) {

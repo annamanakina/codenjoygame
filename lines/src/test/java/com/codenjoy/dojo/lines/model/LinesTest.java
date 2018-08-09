@@ -450,7 +450,36 @@ public class LinesTest {
                         "G BGYWRYRW" +
                         "     WRBRW");
 
-        hero.act(2, 1);
+        hero.act(2, 1); //21
+        game.tick();
+
+        assertE(" B  RBW   " +
+                         " Y  WWG   " +
+                         " BY BWW   " +
+                         " YRYWBB   " +
+                         "  RBBG    " +
+                         "   G      " +
+                         "G YBR     " +
+                         "RGWYRYGBWR" +
+                         "G GYYWRYRW" +
+                         "     WRBRW");
+    }
+
+    //test burnline Method once more(right) case UpVertical
+    @Test
+    public void shouldChangeColorWhenThreeSameColorInLine_rightUpVertical3() {
+        givenFl( " B  RBW Y " +
+                        " Y  WWG Y " +
+                        " BY BWWY  " +
+                        " YRYWBB   " +
+                        "  RBBG    " +
+                        "   G      " +
+                        "G YBR     " +
+                        "RGWYRYGBWR" +
+                        "G GYYWRYRW" +
+                        "     WRBRW");
+
+        hero.act(7, 7);
         game.tick();
 
         assertE(" B  RBW   " +
