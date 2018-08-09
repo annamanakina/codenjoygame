@@ -144,9 +144,35 @@ public class Lines implements Field {
                 newColor = getBall(pt).getColor();
                 getBall(pt(m, n - 1)).setColor(newColor);
                 if (n == 9) {
-                    getBall(pt(m, n)).setColor(Elements.NONE);
+                    getBall(pt(m, n)).setColor(Elements.NONE); //TODO replace later for random
                 }
             }
+        }
+    }
+
+
+    //если три равны между, вертикально
+    private void burnLineBetweenVertical(Ball startBall) {
+        //System.out.println("burnLine startBall " + startBall + ", " + startBall.getColor());
+        int i = startBall.getX();
+        int j = startBall.getY();
+
+        Elements newColor;
+
+        //берем второй верхний элемент от начального
+        int n = j + 2;
+        for (; n < 10; n++) {
+
+            Point pt = pt(i, n);
+            newColor = getBall(pt).getColor();
+            getBall(pt(i, n - 3)).setColor(newColor);
+                /*if (n == 9) {
+                    getBall(pt(i, n)).setColor(Elements.NONE); //TODO replace later for random
+                }*/
+        }
+
+        for (++j; j < 10; j++) {
+            getBall(pt(i, j)).setColor(Elements.NONE);
         }
     }
 
@@ -282,6 +308,8 @@ public class Lines implements Field {
                     case RIGHT:
                         if (isBallsEqualBetweenVertical(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            //TODO заменить на более общий метод
+                            burnLineBetweenVertical(ball);
                         }
                         if (isNextTwoRightBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);

@@ -378,6 +378,35 @@ public class LinesTest {
 
 
 
+    //test burnline Method (right)
+    @Test
+    public void shouldChangeColorWhenThreeSameColorInLine_rightBetweenVertical() {
+        givenFl( " B YRBW   " +
+                        " Y BWWG   " +
+                        " BYGBWW   " +
+                        " YRBYBB   " +
+                        "  RYBG    " +
+                        "   Y      " +
+                        "G YBR     " +
+                        "RGWBRYGBWR" +
+                        "G BGYWRYRW" +
+                        "     WRBRW");
+
+        hero.act(3, 6);
+        game.tick();
+
+        assertE(" B Y BW   " +
+                         " Y B WG   " +
+                         " BYG WW   " +
+                         " YRYRBB   " +
+                         "  RYWG    " +
+                         "   Y      " +
+                         "G YBR     " +
+                         "RGWBRYGBWR" +
+                         "G BGYWRYRW" +
+                         "     WRBRW");
+    }
+
     // на бомбе я взрываюсь
     /*@Test
     public void shouldDieOnBomb() {
