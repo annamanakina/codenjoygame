@@ -176,7 +176,7 @@ public class Lines implements Field {
         }
     }
 
-    //если три равны вертикально вверхё
+    //если три равны вертикально вверх
     private void burnLineUpVertical(Ball startBall) {
         //System.out.println("burnLine startBall " + startBall + ", " + startBall.getColor());
         int i = startBall.getX();
@@ -215,6 +215,29 @@ public class Lines implements Field {
         }
         //System.out.println("burnLineUpVertical index " + ++index);
 
+    }
+
+    //если три равны вертикально вниз
+    private void burnLineDownVertical(Ball startBall) {
+        //System.out.println("burnLine startBall " + startBall + ", " + startBall.getColor());
+        int i = startBall.getX();
+        int j = startBall.getY();
+        j++;
+
+        Elements newColor;
+
+        int index = 0;
+            for (; j < 10; j++) {
+                Point pt = pt(i, j);
+                newColor = getBall(pt).getColor();
+                index = j - 3;
+                System.out.println("burnLineDownVertical index " + index);
+                getBall(pt(i, index)).setColor(newColor);
+            }
+            ++index;
+            for (; index < 10; index++) {
+                getBall(pt(i, index)).setColor(Elements.NONE); //TODO replace later for random
+            }
     }
 
     private boolean isBoader(Point pt) {
@@ -364,6 +387,7 @@ public class Lines implements Field {
 
                         if (isNextTwoBallsEqualDownVertical(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineDownVertical(ball);
                         }
 
                         break;
