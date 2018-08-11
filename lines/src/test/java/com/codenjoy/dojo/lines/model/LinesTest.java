@@ -551,6 +551,34 @@ public class LinesTest {
                          "     WRBRW");
     }
 
+    @Test
+    public void shouldChangeColorWhenThreeSameColorInLine_UpVertical() {
+        givenFl( " B  WBY Y " +
+                        " Y  WWG Y " +
+                        " BY WWWY  " +
+                        " YRYWBB   " +
+                        "  RBBB    " +
+                        "  YWG     " +
+                        "G YYRY    " +
+                        "RGWYRYGBWR" +
+                        "G GYYWRYRW" +
+                        "     YRBRW");
+
+        hero.act(5, 0);
+        game.tick();
+
+        assertE(" B  W Y Y " +
+                         " Y  W G Y " +
+                         " BY W WY  " +
+                         " YRYWBB   " +
+                         "  RBBW    " +
+                         "  YWGW    " +
+                         "G YYRB    " +
+                         "RGWYRBGBWR" +
+                         "G GYY RYRW" +
+                         "     WRBRW");
+    }
+
 
     // на бомбе я взрываюсь
     /*@Test

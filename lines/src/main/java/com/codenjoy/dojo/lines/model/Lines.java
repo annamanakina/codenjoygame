@@ -426,6 +426,7 @@ public class Lines implements Field {
 
                         if (isNextTwoBallsEqualUpVertical(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineUpVertical(ball);
                         }
 
                         if (isNextTwoRightBallsEqualHorizontal(currentBall, ball)) {
