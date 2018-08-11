@@ -240,6 +240,33 @@ public class Lines implements Field {
             }
     }
 
+
+    private void burnLineBetweenHorizontal(Ball startBall){
+        Point startPT = Direction.LEFT.change(startBall);
+        Point endPT = Direction.RIGHT.change(startBall);
+
+        int startX = startPT.getX();
+        int endX = endPT.getX();
+
+        int startY = startPT.getY();
+
+        Elements newColor;
+        //
+        for ( ; startX < ++endX; startX++) {
+
+            for (++startY; startY < 10; startY++) {
+                Point pt = pt(startX, startY);
+                newColor = getBall(pt).getColor();
+                getBall(pt(startX, startY - 1)).setColor(newColor);
+                if (startY == 9) {
+                    getBall(pt(startX, startY)).setColor(Elements.NONE); //TODO replace later for random
+                }
+            }
+        }
+    }
+
+
+
     private boolean isBoader(Point pt) {
         boolean boader = false;
         if (((pt.getX() <= 9) & (pt.getX() >= 0)) & ((pt.getY() <= 9) & (pt.getY() >= 0))) {
@@ -394,6 +421,7 @@ public class Lines implements Field {
                     case UP:
                         if (isBallsEqualBetweenHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineBetweenHorizontal(ball);
                         }
 
                         if (isNextTwoBallsEqualUpVertical(currentBall, ball)) {
