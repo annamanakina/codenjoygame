@@ -130,8 +130,8 @@ public class Lines implements Field {
         //burnLine(next);
     }
 
-    private void burnLine(Ball startBall) {
-        System.out.println("burnLine startBall " + startBall + ", " + startBall.getColor());
+    private void burnLineRightHorizontal(Ball startBall) {
+        //System.out.println("burnLine startBall " + startBall + ", " + startBall.getColor());
         int i = startBall.getX();
         int j = startBall.getY();
         Elements newColor;
@@ -142,9 +142,7 @@ public class Lines implements Field {
             for (++n; n < 10; n++) {
                 Point pt = pt(m, n);
                 newColor = getBall(pt).getColor();
-                System.out.println("burnLine n1 " + n);
                 getBall(pt(m, n - 1)).setColor(newColor);
-                System.out.println("burnLine n2 " + n);
                 if (n == 9) {
                     getBall(pt(m, n)).setColor(Elements.NONE); //TODO replace later for random
                 }
@@ -406,7 +404,7 @@ public class Lines implements Field {
                         }
                         if (isNextTwoRightBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
-                            burnLine(ball);
+                            burnLineRightHorizontal(ball);
                         }
 
                         if (isNextTwoBallsEqualUpVertical(currentBall, ball)) {
@@ -433,11 +431,12 @@ public class Lines implements Field {
 
                         if (isNextTwoRightBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
-                            burnLine(ball);
+                            burnLineRightHorizontal(ball);
                         }
 
                         if (isNextTwoLeftBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            //burnLineLeftHorizontal(ball);
                         }
 
                         break;
