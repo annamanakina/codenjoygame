@@ -181,20 +181,18 @@ public class Lines implements Field {
 
         Elements newColor;
 
-        //берем второй верхний элемент от начального
         int n = j + 2;
+        int index = 0;
         for (; n < 10; n++) {
-
             Point pt = pt(i, n);
             newColor = getBall(pt).getColor();
-            getBall(pt(i, n - 3)).setColor(newColor);
-                /*if (n == 9) {
-                    getBall(pt(i, n)).setColor(Elements.NONE); //TODO replace later for random
-                }*/
+            index = n-3;
+            getBall(pt(i, index)).setColor(newColor);
         }
 
-        for (++j; j < 10; j++) {
-            getBall(pt(i, j)).setColor(Elements.NONE);
+        ++index;
+        for (; index < 10; index++) {
+            getBall(pt(i, index)).setColor(Elements.NONE); //TODO replace later for random
         }
     }
 
@@ -403,7 +401,7 @@ public class Lines implements Field {
                     case LEFT:
                         if (isBallsEqualBetweenVertical(currentBall, ball)) {
                             changeColor(currentBall, ball);
-                            //burnLineBetweenVertical(ball);
+                            burnLineBetweenVertical(ball);
                         }
 
                         if (isNextTwoLeftBallsEqualHorizontal(currentBall, ball)) {
