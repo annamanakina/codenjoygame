@@ -403,10 +403,12 @@ public class Lines implements Field {
                     case LEFT:
                         if (isBallsEqualBetweenVertical(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            //burnLineBetweenVertical(ball);
                         }
 
                         if (isNextTwoLeftBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineLeftHorizontal(ball);
                         }
 
                         if (isNextTwoBallsEqualUpVertical(currentBall, ball)) {
