@@ -150,6 +150,28 @@ public class Lines implements Field {
         }
     }
 
+    private void burnLineLeftHorizontal(Ball startBall) {
+        Point leftPT = Direction.LEFT.change(startBall);
+        Point startPT = Direction.LEFT.change(leftPT);
+
+        int startY = startPT.getY();
+
+        Elements newColor;
+
+      for (startY = startY+1; startY < 10; startY++){
+          int startX = startPT.getX();
+          int endX = startBall.getX();
+          for ( ; startX < endX + 1; startX++){
+              Point pt = pt(startX, startY);
+              newColor = getBall(pt).getColor();
+              getBall(pt(startX, startY - 1)).setColor(newColor);
+              if (startY == 9) {
+                  getBall(pt(startX, startY)).setColor(Elements.NONE); //TODO replace later for random
+              }
+          }
+      }
+    }
+
 
     //если три равны между, вертикально
     private void burnLineBetweenVertical(Ball startBall) {
@@ -436,7 +458,7 @@ public class Lines implements Field {
 
                         if (isNextTwoLeftBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
-                            //burnLineLeftHorizontal(ball);
+                            burnLineLeftHorizontal(ball);
                         }
 
                         break;

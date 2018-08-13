@@ -580,7 +580,7 @@ public class LinesTest {
     }
 
     @Test
-    public void shouldChangeColorWhenThreeSameColorInLine_UpRightVertical() {
+    public void shouldChangeColorWhenThreeSameColorInLine_UpRightHorizontal() {
         givenFl( " B  WBY Y " +
                         " YB WGG Y " +
                         " BY  WWY  " +
@@ -604,6 +604,34 @@ public class LinesTest {
                          "G YWGY  R " +
                          "RGGWRYGBWR" +
                          "G GBYWRYRW" +
+                         "     YRBRW");
+    }
+
+    @Test
+    public void shouldChangeColorWhenThreeSameColorInLine_UpLeftHorizontal() {
+        givenFl( " B  WBY Y " +
+                        " YB WGG Y " +
+                        " BY  WWY  " +
+                        " YRYWYB   " +
+                        "  RBBB  W " +
+                        "  YWG   Y " +
+                        "G GYYY  R " +
+                        "RGYWRYYBWR" +
+                        "G GBYWRYRW" +
+                        "     YRBRW");
+
+        hero.act(7, 1);
+        game.tick();
+
+        assertE(" B  W   Y " +
+                         " YB WBY Y " +
+                         " BY  GG   " +
+                         " YRYWWWY  " +
+                         "  RBBYB W " +
+                         "  YWGB  Y " +
+                         "G GYY   R " +
+                         "RGYWRY  WR" +
+                         "G GBYWRBRW" +
                          "     YRBRW");
     }
 
