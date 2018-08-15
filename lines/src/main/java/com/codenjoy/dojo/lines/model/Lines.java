@@ -416,6 +416,7 @@ public class Lines implements Field {
 
                         if (isNextTwoBallsEqualDownVertical(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineDownVertical(ball);
                         }
                         break;
 
