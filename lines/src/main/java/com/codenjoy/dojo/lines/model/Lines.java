@@ -131,23 +131,26 @@ public class Lines implements Field {
     }
 
     private void burnLineRightHorizontal(Ball startBall) {
-        //System.out.println("burnLine startBall " + startBall + ", " + startBall.getColor());
-        int i = startBall.getX();
-        int j = startBall.getY();
+        Point rightPT = Direction.RIGHT.change(startBall);
+        Point endPT = Direction.RIGHT.change(rightPT);
+
+        int startY = endPT.getY();
+
         Elements newColor;
 
-        for (int m = i; m < i + 3; m++) {
-
-            int n = j;
-            for (++n; n < 10; n++) {
-                Point pt = pt(m, n);
+        for (startY = startY + 1; startY < 10; startY++) {
+            int startX = startBall.getX();
+            int endX = endPT.getX();
+            for (; startX < endX + 1; startX++) {
+                Point pt = pt(startX, startY);
                 newColor = getBall(pt).getColor();
-                getBall(pt(m, n - 1)).setColor(newColor);
-                if (n == 9) {
-                    getBall(pt(m, n)).setColor(Elements.NONE); //TODO replace later for random
+                getBall(pt(startX, startY - 1)).setColor(newColor);
+                if (startY == 9) {
+                    getBall(pt(startX, startY)).setColor(Elements.NONE); //TODO replace later for random
                 }
             }
         }
+
     }
 
     private void burnLineLeftHorizontal(Ball startBall) {
@@ -251,7 +254,7 @@ public class Lines implements Field {
             Point pt = pt(i, j);
             newColor = getBall(pt).getColor();
             index = j - 3;
-            System.out.println("burnLineDownVertical index " + index);
+            //System.out.println("burnLineDownVertical index " + index);
             getBall(pt(i, index)).setColor(newColor);
         }
         ++index;
@@ -468,6 +471,7 @@ public class Lines implements Field {
 
                         if (isNextTwoRightBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineRightHorizontal(ball);
                         }
 
                         if (isNextTwoLeftBallsEqualHorizontal(currentBall, ball)) {
