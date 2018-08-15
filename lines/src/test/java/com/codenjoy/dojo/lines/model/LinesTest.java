@@ -133,8 +133,9 @@ public class LinesTest {
     }
 
 
+    //unnecessary because of new functionality
     //move ball to the left
-    @Test
+    /*@Test
     public void shouldMoveBall_left_checkIfNextBetweenHasTheSameColor() {
         givenFl(" B Y      " +
                        " Y B W    " +
@@ -160,9 +161,11 @@ public class LinesTest {
                          "          " +
                          "          " +
                          "          ");
-    }
+    }*/
 
-    @Test
+
+   //unnecessary because of new functionality
+    /*@Test
     public void shouldMoveBall_left_checkIfNextTwoHasTheSameColor_horizontal() {
         givenFl(" B Y      " +
                        " Y B W    " +
@@ -188,9 +191,10 @@ public class LinesTest {
                          "          " +
                          "          " +
                          "          ");
-    }
+    }*/
 
-    @Test
+    //unnecessary code because of new functionality
+    /*@Test
     public void shouldMoveBall_left_up_checkIfNextTwoHasTheSameColor() {
         givenFl(" B Y      " +
                        " Y B W    " +
@@ -216,7 +220,7 @@ public class LinesTest {
                          "          " +
                          "          " +
                          "          ");
-    }
+    }*/
 
     //can move element if next two down elements have the same color
     @Test
@@ -247,8 +251,10 @@ public class LinesTest {
                 "          ");
     }
 
+
+    //unnecessary because of new functionality
     //can move element and check if element is not going off the border
-    @Test
+    /*@Test
     public void shouldMoveBall_inAllDirectionsAndCheckIfIsNotBoader() {
         givenFl(" B Y      " +
                 " Y B W    " +
@@ -274,7 +280,7 @@ public class LinesTest {
                 "GR        " +
                 "G         " +
                 "          ");
-    }
+    }*/
 
     @Test
     public void shouldMoveBall_inAllDirections() {
