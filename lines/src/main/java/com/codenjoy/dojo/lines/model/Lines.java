@@ -158,18 +158,18 @@ public class Lines implements Field {
 
         Elements newColor;
 
-      for (startY = startY+1; startY < 10; startY++){
-          int startX = startPT.getX();
-          int endX = startBall.getX();
-          for ( ; startX < endX + 1; startX++){
-              Point pt = pt(startX, startY);
-              newColor = getBall(pt).getColor();
-              getBall(pt(startX, startY - 1)).setColor(newColor);
-              if (startY == 9) {
-                  getBall(pt(startX, startY)).setColor(Elements.NONE); //TODO replace later for random
-              }
-          }
-      }
+        for (startY = startY + 1; startY < 10; startY++) {
+            int startX = startPT.getX();
+            int endX = startBall.getX();
+            for (; startX < endX + 1; startX++) {
+                Point pt = pt(startX, startY);
+                newColor = getBall(pt).getColor();
+                getBall(pt(startX, startY - 1)).setColor(newColor);
+                if (startY == 9) {
+                    getBall(pt(startX, startY)).setColor(Elements.NONE); //TODO replace later for random
+                }
+            }
+        }
     }
 
 
@@ -186,7 +186,7 @@ public class Lines implements Field {
         for (; n < 10; n++) {
             Point pt = pt(i, n);
             newColor = getBall(pt).getColor();
-            index = n-3;
+            index = n - 3;
             getBall(pt(i, index)).setColor(newColor);
         }
 
@@ -247,34 +247,30 @@ public class Lines implements Field {
         Elements newColor;
 
         int index = 0;
-            for (; j < 10; j++) {
-                Point pt = pt(i, j);
-                newColor = getBall(pt).getColor();
-                index = j - 3;
-                System.out.println("burnLineDownVertical index " + index);
-                getBall(pt(i, index)).setColor(newColor);
-            }
-            ++index;
-            for (; index < 10; index++) {
-                getBall(pt(i, index)).setColor(Elements.NONE); //TODO replace later for random
-            }
+        for (; j < 10; j++) {
+            Point pt = pt(i, j);
+            newColor = getBall(pt).getColor();
+            index = j - 3;
+            System.out.println("burnLineDownVertical index " + index);
+            getBall(pt(i, index)).setColor(newColor);
+        }
+        ++index;
+        for (; index < 10; index++) {
+            getBall(pt(i, index)).setColor(Elements.NONE); //TODO replace later for random
+        }
     }
 
 
-    private void burnLineBetweenHorizontal(Ball startBall){
+    private void burnLineBetweenHorizontal(Ball startBall) {
         Point startPT = Direction.LEFT.change(startBall);
         Point endPT = Direction.RIGHT.change(startBall);
 
-        int startX = startPT.getX();
-        int endX = endPT.getX();
-
         int startY = startPT.getY();
-
         Elements newColor;
-        //
-        for ( ; startX < ++endX; startX++) {
-
-            for (++startY; startY < 10; startY++) {
+        for (startY = startY + 1; startY < 10; startY++) {
+            int startX = startPT.getX();
+            int endX = endPT.getX();
+            for (; startX < endX + 1; startX++) {
                 Point pt = pt(startX, startY);
                 newColor = getBall(pt).getColor();
                 getBall(pt(startX, startY - 1)).setColor(newColor);
@@ -284,7 +280,6 @@ public class Lines implements Field {
             }
         }
     }
-
 
 
     private boolean isBoader(Point pt) {
@@ -468,6 +463,7 @@ public class Lines implements Field {
 
                         if (isBallsEqualBetweenHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineBetweenHorizontal(ball);
                         }
 
                         if (isNextTwoRightBallsEqualHorizontal(currentBall, ball)) {
