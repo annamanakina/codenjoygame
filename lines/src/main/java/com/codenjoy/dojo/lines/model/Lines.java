@@ -120,9 +120,9 @@ public class Lines implements Field {
 
     private void changeColor(Ball first, Ball next) {
         Elements firstColor = first.getColor();
-        // System.out.println(" changeColor first " + first);
+        System.out.println(" changeColor firstColor " + first.getColor() + ", first " + first);
         Elements nextColor = next.getColor();
-        // System.out.println("changeColor currentBall " + next);
+        System.out.println("changeColor nextColor " + next.getColor() + ", next " + next);
         balls.get(balls.indexOf(next)).setColor(firstColor);
         balls.get(balls.indexOf(first)).setColor(nextColor);
 
@@ -476,8 +476,8 @@ public class Lines implements Field {
 
                         if (isNextTwoLeftBallsEqualHorizontal(currentBall, ball)) {
                             changeColor(currentBall, ball);
+                            burnLineLeftHorizontal(ball);
                         }
-
                         if (isNextTwoBallsEqualDownVertical(currentBall, ball)) {
                             changeColor(currentBall, ball);
                         }
